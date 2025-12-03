@@ -2,33 +2,61 @@ const express = require('express');
 const router = express.Router();
 const Resume = require('../models/Resume');
 
-// Create or Update Resume
+// @route   POST /api/resume
+// @desc    Create a new resume
+// @access  Public
 router.post('/', async (req, res) => {
     try {
-        const resumeData = req.body;
-        // For simplicity, we'll just create a new one every time or update if ID is provided
-        // In a real app, we'd handle user authentication
-        if (resumeData._id) {
-            const updatedResume = await Resume.findByIdAndUpdate(resumeData._id, resumeData, { new: true });
-            return res.json(updatedResume);
-        }
-        const newResume = new Resume(resumeData);
+        const newResume = new Resume(req.body);
         const savedResume = await newResume.save();
-        res.json(savedResume);
-    } catch (error) {
-        console.error("Save Resume Error:", error);
-        res.status(500).json({ error: "Failed to save resume" });
+        res.status(201).json(savedResume);
+    } catch (err) {
+        console.error("Create Resume Error:", err);
+        res.status(500).json({ error: err.message });
     }
 });
 
-// Get Resume by ID
+// @route   GET /api/resume/:id
+// @desc    Get resume by ID
+// @access  Public
 router.get('/:id', async (req, res) => {
     try {
         const resume = await Resume.findById(req.params.id);
-        if (!resume) return res.status(404).json({ error: "Resume not found" });
+        if (!resume) return res.status(404).json({ msg: 'Resume not found' });
         res.json(resume);
-    } catch (error) {
-        res.status(500).json({ error: "Failed to fetch resume" });
+    } catch (err) {
+        console.error("Get Resume Error:", err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// @route   PUT /api/resume/:id
+// @desc    Update resume
+// @access  Public
+router.put('/:id', async (req, res) => {
+    try {
+        const updatedResume = await Resume.findByIdAndUpdate(
+            req.params.id,
+            { $set: req.body },
+            { new: true }
+        );
+        res.json(updatedResume);
+    } catch (err) {
+        console.error("Update Resume Error:", err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// @route   DELETE /api/resume/:id
+// @desc    Delete resume
+// @access  Public
+router.delete('/:id', async (req, res) => {
+    try {
+        await Resume.findByIdAndDelete(req.params.id);
+        res.json({ msg: 'Resume deleted' });
+    } catch (err) {
+        console.error("Delete Resume Error:", err);
+        res.status(500).json({ error: err.message });
     }
 });
 

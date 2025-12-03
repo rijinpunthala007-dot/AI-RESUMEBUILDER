@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const mongoose = require('mongoose');
+const connectDB = require('./config/db');
 const cors = require('cors');
 
 const app = express();
@@ -11,12 +11,10 @@ app.use(cors());
 app.use(express.json());
 
 // Database Connection
-mongoose.connect(process.env.MONGODB_URI)
-    .then(() => console.log('MongoDB connected'))
-    .catch(err => console.error('MongoDB connection error:', err));
+connectDB();
 
 // Routes
-app.use('/api/imagekit', require('./routes/imagekit'));
+// app.use('/api/imagekit', require('./routes/imagekit'));
 app.use('/api/ai', require('./routes/ai'));
 app.use('/api/resume', require('./routes/resume'));
 

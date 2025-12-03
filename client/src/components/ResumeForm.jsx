@@ -3,6 +3,8 @@ import axios from 'axios';
 import ImageUpload from './ImageUpload';
 import ResumePreview from './ResumePreview';
 import PDFExport from './PDFExport';
+import ErrorBoundary from './ErrorBoundary';
+import { API_URL } from '../config';
 
 const InputField = ({ label, ...props }) => (
     <div className="flex flex-col gap-1">
@@ -27,7 +29,7 @@ const ResumeForm = () => {
     });
     const [activeStep, setActiveStep] = useState(0);
     const [isGenerating, setIsGenerating] = useState(false);
-    const [selectedLayout, setSelectedLayout] = useState('modern');
+
 
     const handlePersonalInfoChange = (e) => {
         setResumeData({
@@ -67,14 +69,14 @@ const ResumeForm = () => {
     };
 
     const handleSkillsChange = (e) => {
-        const skillsArray = e.target.value.split(',').map(skill => skill.trim());
+        const skillsArray = e.target.value.split(',');
         setResumeData({ ...resumeData, skills: skillsArray });
     };
 
     const generateSummary = async () => {
         setIsGenerating(true);
         try {
-            const res = await axios.post('http://localhost:5000/api/ai/generate-summary', {
+            const res = await axios.post(`${API_URL}/api/ai/generate-summary`, {
                 experience: resumeData.experience,
                 skills: resumeData.skills
             });
@@ -258,45 +260,16 @@ const ResumeForm = () => {
                                         />
                                     </div>
 
-                                    {/* Layout Selection */}
-                                    <div className="bg-white p-6 rounded-xl border border-gray-200">
-                                        <h3 className="text-lg font-semibold text-gray-800 mb-4">Choose PDF Layout</h3>
-                                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                                            <div
-                                                className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${selectedLayout === 'modern' ? 'border-indigo-600 bg-indigo-50' : 'border-gray-200 hover:border-indigo-300'}`}
-                                                onClick={() => setSelectedLayout('modern')}
-                                            >
-                                                <div className="h-20 bg-slate-900 rounded mb-2 w-1/3"></div>
-                                                <div className="font-medium text-center">Modern</div>
-                                                <div className="text-xs text-gray-500 text-center">Dark Sidebar</div>
-                                            </div>
-                                            <div
-                                                className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${selectedLayout === 'classic' ? 'border-indigo-600 bg-indigo-50' : 'border-gray-200 hover:border-indigo-300'}`}
-                                                onClick={() => setSelectedLayout('classic')}
-                                            >
-                                                <div className="h-4 bg-gray-800 rounded mb-2 w-full mx-auto"></div>
-                                                <div className="font-medium text-center">Classic</div>
-                                                <div className="text-xs text-gray-500 text-center">Traditional</div>
-                                            </div>
-                                            <div
-                                                className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${selectedLayout === 'minimalist' ? 'border-indigo-600 bg-indigo-50' : 'border-gray-200 hover:border-indigo-300'}`}
-                                                onClick={() => setSelectedLayout('minimalist')}
-                                            >
-                                                <div className="h-20 bg-white border border-gray-200 rounded mb-2"></div>
-                                                <div className="font-medium text-center">Minimalist</div>
-                                                <div className="text-xs text-gray-500 text-center">Clean & Simple</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                     <div className="border-t pt-8">
                                         <div className="flex justify-between items-center mb-6">
                                             <h3 className="text-xl font-bold text-gray-800">Live Preview</h3>
-                                            <PDFExport data={resumeData} layout={selectedLayout} />
+                                            <ErrorBoundary fallback={<div className="text-red-500 text-sm">PDF generation failed.</div>}>
+                                                <PDFExport data={resumeData} />
+                                            </ErrorBoundary>
                                         </div>
                                         <div className="bg-gray-200 p-4 rounded-xl overflow-hidden shadow-inner">
                                             <div className="scale-[0.8] origin-top-left sm:scale-100 sm:origin-top">
-                                                <ResumePreview data={resumeData} layout={selectedLayout} />
+                                                <ResumePreview data={resumeData} />
                                             </div>
                                         </div>
                                     </div>

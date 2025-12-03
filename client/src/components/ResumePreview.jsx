@@ -49,7 +49,7 @@ const ModernLayout = ({ data }) => (
         </div>
 
         {/* Right Content */}
-        <div className="w-2/3 p-10 bg-white">
+        <div className="w-2/3 p-8 bg-white">
             {data.summary && (
                 <div className="mb-10">
                     <h2 className="text-xl font-bold text-slate-900 uppercase tracking-widest mb-4 border-b-2 border-slate-100 pb-2">Profile</h2>
@@ -96,146 +96,10 @@ const ModernLayout = ({ data }) => (
     </div>
 );
 
-const ClassicLayout = ({ data }) => (
-    <div className="bg-white w-[210mm] min-h-[297mm] mx-auto shadow-2xl p-12 text-gray-800 font-serif">
-        <div className="text-center border-b-2 border-gray-800 pb-6 mb-8">
-            <h1 className="text-4xl font-bold uppercase tracking-wide mb-2">{data.personalInfo.firstName} {data.personalInfo.lastName}</h1>
-            <div className="flex justify-center gap-4 text-sm text-gray-600 flex-wrap">
-                <span>{data.personalInfo.email}</span>
-                <span>|</span>
-                <span>{data.personalInfo.phone}</span>
-                <span>|</span>
-                <span>{data.personalInfo.address}</span>
-            </div>
-            <div className="flex justify-center gap-4 text-sm text-blue-800 mt-2 font-medium">
-                {data.personalInfo.linkedin && <a href={data.personalInfo.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>}
-                {data.personalInfo.github && <a href={data.personalInfo.github} target="_blank" rel="noreferrer">GitHub</a>}
-            </div>
-        </div>
-
-        {data.summary && (
-            <div className="mb-8">
-                <h2 className="text-lg font-bold uppercase border-b border-gray-300 mb-3 pb-1">Professional Summary</h2>
-                <p className="text-justify leading-relaxed">{data.summary}</p>
-            </div>
-        )}
-
-        {data.experience.length > 0 && (
-            <div className="mb-8">
-                <h2 className="text-lg font-bold uppercase border-b border-gray-300 mb-4 pb-1">Experience</h2>
-                <div className="space-y-6">
-                    {data.experience.map((exp, index) => (
-                        <div key={index}>
-                            <div className="flex justify-between items-baseline">
-                                <h3 className="font-bold text-lg">{exp.jobTitle}, <span className="italic font-normal">{exp.company}</span></h3>
-                                <span className="text-sm text-gray-600">{exp.startDate} - {exp.endDate}</span>
-                            </div>
-                            <p className="mt-2 text-sm leading-relaxed whitespace-pre-line">{exp.description}</p>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        )}
-
-        {data.education.length > 0 && (
-            <div className="mb-8">
-                <h2 className="text-lg font-bold uppercase border-b border-gray-300 mb-4 pb-1">Education</h2>
-                <div className="space-y-4">
-                    {data.education.map((edu, index) => (
-                        <div key={index} className="flex justify-between">
-                            <div>
-                                <h3 className="font-bold">{edu.institution}</h3>
-                                <div>{edu.degree}</div>
-                            </div>
-                            <span className="text-sm text-gray-600">{edu.startDate} - {edu.endDate}</span>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        )}
-
-        {data.skills.length > 0 && (
-            <div>
-                <h2 className="text-lg font-bold uppercase border-b border-gray-300 mb-3 pb-1">Skills</h2>
-                <div className="flex flex-wrap gap-x-6 gap-y-2">
-                    {data.skills.map((skill, index) => (
-                        <span key={index} className="text-sm">• {skill}</span>
-                    ))}
-                </div>
-            </div>
-        )}
-    </div>
-);
-
-const MinimalistLayout = ({ data }) => (
-    <div className="bg-white w-[210mm] min-h-[297mm] mx-auto shadow-2xl p-16 text-gray-700 font-sans">
-        <div className="mb-12">
-            <h1 className="text-5xl font-light text-gray-900 mb-4">{data.personalInfo.firstName} {data.personalInfo.lastName}</h1>
-            <div className="text-sm text-gray-500 space-y-1">
-                <p>{data.personalInfo.email}</p>
-                <p>{data.personalInfo.phone}</p>
-                <p>{data.personalInfo.address}</p>
-            </div>
-        </div>
-
-        {data.summary && (
-            <div className="mb-10">
-                <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-4">Profile</h2>
-                <p className="text-sm leading-loose text-gray-600">{data.summary}</p>
-            </div>
-        )}
-
-        {data.experience.length > 0 && (
-            <div className="mb-10">
-                <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-6">Experience</h2>
-                <div className="space-y-8">
-                    {data.experience.map((exp, index) => (
-                        <div key={index}>
-                            <div className="flex justify-between items-baseline mb-2">
-                                <h3 className="font-bold text-gray-900">{exp.jobTitle}</h3>
-                                <span className="text-xs text-gray-400">{exp.startDate} - {exp.endDate}</span>
-                            </div>
-                            <div className="text-xs font-medium text-gray-500 mb-2 uppercase">{exp.company}</div>
-                            <p className="text-sm leading-relaxed text-gray-600 whitespace-pre-line">{exp.description}</p>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        )}
-
-        {data.education.length > 0 && (
-            <div className="mb-10">
-                <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-6">Education</h2>
-                <div className="space-y-6">
-                    {data.education.map((edu, index) => (
-                        <div key={index}>
-                            <div className="flex justify-between items-baseline mb-1">
-                                <h3 className="font-bold text-gray-900">{edu.institution}</h3>
-                                <span className="text-xs text-gray-400">{edu.startDate} - {edu.endDate}</span>
-                            </div>
-                            <div className="text-sm text-gray-600">{edu.degree}</div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        )}
-
-        {data.skills.length > 0 && (
-            <div>
-                <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-4">Skills</h2>
-                <div className="flex flex-wrap gap-4 text-sm text-gray-600">
-                    {data.skills.map((skill, index) => (
-                        <span key={index}>{skill}</span>
-                    ))}
-                </div>
-            </div>
-        )}
-    </div>
-);
-
-const ResumePreview = ({ data, layout }) => {
-    if (layout === 'classic') return <ClassicLayout data={data} />;
-    if (layout === 'minimalist') return <MinimalistLayout data={data} />;
+const ResumePreview = ({ data }) => {
+    if (!data || !data.personalInfo) {
+        return <div className="p-10 text-center text-gray-500">Loading preview...</div>;
+    }
     return <ModernLayout data={data} />;
 };
 

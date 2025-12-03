@@ -22,7 +22,7 @@ router.post('/generate-summary', async (req, res) => {
             prompt += "\nSkills: " + skills.join(", ") + "\n";
         }
 
-        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-preview-09-2025" });
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
         const result = await model.generateContent(prompt);
         const response = await result.response;
         const text = response.text();

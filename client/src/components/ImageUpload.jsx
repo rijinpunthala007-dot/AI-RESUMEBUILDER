@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { IKContext, IKUpload } from 'imagekitio-react';
+import { API_URL } from '../config';
 
 const ImageUpload = ({ onSuccess, onError }) => {
     const [uploading, setUploading] = useState(false);
@@ -26,7 +27,7 @@ const ImageUpload = ({ onSuccess, onError }) => {
             <IKContext
                 publicKey={import.meta.env.VITE_IMAGEKIT_PUBLIC_KEY}
                 urlEndpoint={import.meta.env.VITE_IMAGEKIT_URL_ENDPOINT}
-                authenticationEndpoint="http://localhost:5000/api/imagekit/auth"
+                authenticationEndpoint={`${API_URL}/api/imagekit/auth`}
             >
                 <IKUpload
                     fileName="profile_picture.jpg"
