@@ -261,7 +261,7 @@ const ResumeForm = () => {
                                     </div>
 
                                     <div className="border-t pt-8">
-                                        <div className="flex justify-between items-center mb-6">
+                                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                                             <h3 className="text-xl font-bold text-gray-800">Live Preview</h3>
                                             <ErrorBoundary fallback={<div className="text-red-500 text-sm">PDF generation failed.</div>}>
                                                 <PDFExport data={resumeData} />

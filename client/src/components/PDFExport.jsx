@@ -135,7 +135,7 @@ const PDFExport = ({ data }) => (
             return loading ? (
                 <button className="bg-gray-400 text-white px-6 py-2.5 rounded-lg font-medium cursor-not-allowed shadow-md">Preparing PDF...</button>
             ) : (
-                <a href={url} download="resume.pdf" className="bg-indigo-600 text-white px-6 py-2.5 rounded-lg font-medium hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-200">
+                <a href={url} download="resume.pdf" className="bg-indigo-600 text-white px-6 py-2.5 rounded-lg font-medium hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-200 whitespace-nowrap">
                     Download PDF
                 </a>
             );
