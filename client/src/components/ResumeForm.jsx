@@ -267,8 +267,8 @@ const ResumeForm = () => {
                                                 <PDFExport data={resumeData} />
                                             </ErrorBoundary>
                                         </div>
-                                        <div className="bg-gray-200 p-4 rounded-xl overflow-hidden shadow-inner">
-                                            <div className="scale-[0.8] origin-top-left sm:scale-100 sm:origin-top">
+                                        <div className="bg-gray-200 p-4 rounded-xl overflow-hidden shadow-inner overflow-x-auto">
+                                            <div className="scale-[0.5] sm:scale-[0.8] md:scale-100 origin-top-left min-w-[210mm]">
                                                 <ResumePreview data={resumeData} />
                                             </div>
                                         </div>
